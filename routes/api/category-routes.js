@@ -14,14 +14,14 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   try {
-    const categoryId = await Category.findByPk(req.params.id, {
+    const getCategoryById = await Category.findByPk(req.params.id, {
       include: [{ model: Product }],
     });
-    if (!categoryId) {
+    if (!getCategoryById) {
       res.status(404).json({ message: 'Category not found with that id!' });
       return;
     }
-    res.status(200).json(categoryId);
+    res.status(200).json(getCategoryById);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -38,16 +38,16 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   try {
-    const categoryUpdate = await Category.update(req.body, {
+    const updatedCategoryId = await Category.update(req.body, {
       where: {
         id: req.params.id,
       }
     });
-    if (!categoryUpdate) {
+    if (!updatedCategoryId) {
       res.status(404).json({ message: 'Category not found with that id!' });
       return;
     }
-    res.status(200).json(categoryUpdate);
+    res.status(200).json(updatedCategoryId);
   } catch (err) {
     res.status(500).json(err);
   }
